@@ -1,0 +1,272 @@
+<?php
+/**
+* Created by LazyCrud - @DyanGalih <dyan.galih@gmail.com>
+*/
+namespace App\Http\Controllers\PersonalAccessTokens;
+
+use App\Requests\AdsEventRequest;
+use App\Requests\AdsOrderDetailRequest;
+use App\Requests\AdsOrderRequest;
+use App\Requests\AdsRefPriceRequest;
+use App\Requests\AppMenuCategoryMenuRequest;
+use App\Requests\AppMenuCategoryRequest;
+use App\Requests\AppMenuRequest;
+use App\Requests\AppMenuRouteRequest;
+use App\Requests\AppRoleMenuRequest;
+use App\Requests\AppRoleRouteRequest;
+use App\Requests\AppRouteRequest;
+use App\Requests\AppSettingRequest;
+use App\Requests\CategoryRefRequest;
+use App\Requests\CityRefRequest;
+use App\Requests\EventGalleryRequest;
+use App\Requests\EventHistoryRequest;
+use App\Requests\EventMemberLikeRequest;
+use App\Requests\EventRequest;
+use App\Requests\EventStatusRefRequest;
+use App\Requests\EventWishRequest;
+use App\Requests\FailedJobRequest;
+use App\Requests\FontIconRequest;
+use App\Requests\FontIconTypeRequest;
+use App\Requests\ImageRequest;
+use App\Requests\MemberInterestRequest;
+use App\Requests\MemberRequest;
+use App\Requests\MigrationRequest;
+use App\Requests\OrderDetailRequest;
+use App\Requests\OrderHistoryStatusRequest;
+use App\Requests\OrderRequest;
+use App\Requests\OrderStatusRequest;
+use App\Requests\PermissionRequest;
+use App\Requests\PersonalAccessTokenRequest;
+use App\Requests\SecurityLevelRequest;
+use App\Responses\AdsEventResponse;
+use App\Responses\AdsOrderDetailResponse;
+use App\Responses\AdsOrderResponse;
+use App\Responses\AdsRefPriceResponse;
+use App\Responses\AppMenuCategoryMenuResponse;
+use App\Responses\AppMenuCategoryResponse;
+use App\Responses\AppMenuResponse;
+use App\Responses\AppMenuRouteResponse;
+use App\Responses\AppRoleMenuResponse;
+use App\Responses\AppRoleRouteResponse;
+use App\Responses\AppRouteResponse;
+use App\Responses\AppSettingResponse;
+use App\Responses\CategoryRefResponse;
+use App\Responses\CityRefResponse;
+use App\Responses\EventGalleryResponse;
+use App\Responses\EventHistoryResponse;
+use App\Responses\EventMemberLikeResponse;
+use App\Responses\EventResponse;
+use App\Responses\EventStatusRefResponse;
+use App\Responses\EventWishResponse;
+use App\Responses\FailedJobResponse;
+use App\Responses\FontIconResponse;
+use App\Responses\FontIconTypeResponse;
+use App\Responses\ImageResponse;
+use App\Responses\MemberInterestResponse;
+use App\Responses\MemberResponse;
+use App\Responses\MigrationResponse;
+use App\Responses\OrderDetailResponse;
+use App\Responses\OrderHistoryStatusResponse;
+use App\Responses\OrderResponse;
+use App\Responses\OrderStatusResponse;
+use App\Responses\PermissionResponse;
+use App\Responses\PersonalAccessTokenResponse;
+use App\Responses\SecurityLevelResponse;
+use App\Services\AdsEventService;
+use App\Services\AdsOrderDetailService;
+use App\Services\AdsOrderService;
+use App\Services\AdsRefPriceService;
+use App\Services\AppMenuCategoryMenuService;
+use App\Services\AppMenuCategoryService;
+use App\Services\AppMenuRouteService;
+use App\Services\AppMenuService;
+use App\Services\AppRoleMenuService;
+use App\Services\AppRoleRouteService;
+use App\Services\AppRouteService;
+use App\Services\AppSettingService;
+use App\Services\CategoryRefService;
+use App\Services\CityRefService;
+use App\Services\EventGalleryService;
+use App\Services\EventHistoryService;
+use App\Services\EventMemberLikeService;
+use App\Services\EventService;
+use App\Services\EventStatusRefService;
+use App\Services\EventWishService;
+use App\Services\FailedJobService;
+use App\Services\FontIconService;
+use App\Services\FontIconTypeService;
+use App\Services\ImageService;
+use App\Services\MemberInterestService;
+use App\Services\MemberService;
+use App\Services\MigrationService;
+use App\Services\OrderDetailService;
+use App\Services\OrderHistoryStatusService;
+use App\Services\OrderService;
+use App\Services\OrderStatusService;
+use App\Services\PermissionService;
+use App\Services\PersonalAccessTokenService;
+use App\Services\Requests\AdsEventServiceRequest;
+use App\Services\Requests\AdsOrderDetailServiceRequest;
+use App\Services\Requests\AdsOrderServiceRequest;
+use App\Services\Requests\AdsRefPriceServiceRequest;
+use App\Services\Requests\AppMenuCategoryMenuServiceRequest;
+use App\Services\Requests\AppMenuCategoryServiceRequest;
+use App\Services\Requests\AppMenuRouteServiceRequest;
+use App\Services\Requests\AppMenuServiceRequest;
+use App\Services\Requests\AppRoleMenuServiceRequest;
+use App\Services\Requests\AppRoleRouteServiceRequest;
+use App\Services\Requests\AppRouteServiceRequest;
+use App\Services\Requests\AppSettingServiceRequest;
+use App\Services\Requests\CategoryRefServiceRequest;
+use App\Services\Requests\CityRefServiceRequest;
+use App\Services\Requests\EventGalleryServiceRequest;
+use App\Services\Requests\EventHistoryServiceRequest;
+use App\Services\Requests\EventMemberLikeServiceRequest;
+use App\Services\Requests\EventServiceRequest;
+use App\Services\Requests\EventStatusRefServiceRequest;
+use App\Services\Requests\EventWishServiceRequest;
+use App\Services\Requests\FailedJobServiceRequest;
+use App\Services\Requests\FontIconServiceRequest;
+use App\Services\Requests\FontIconTypeServiceRequest;
+use App\Services\Requests\ImageServiceRequest;
+use App\Services\Requests\MemberInterestServiceRequest;
+use App\Services\Requests\MemberServiceRequest;
+use App\Services\Requests\MigrationServiceRequest;
+use App\Services\Requests\OrderDetailServiceRequest;
+use App\Services\Requests\OrderHistoryStatusServiceRequest;
+use App\Services\Requests\OrderServiceRequest;
+use App\Services\Requests\OrderStatusServiceRequest;
+use App\Services\Requests\PermissionServiceRequest;
+use App\Services\Requests\PersonalAccessTokenServiceRequest;
+use App\Services\Requests\SecurityLevelServiceRequest;
+use App\Services\SecurityLevelService;
+use Exception;
+use WebAppId\Lazy\Tools\Lazy;
+use WebAppId\SmartResponse\Response;
+use WebAppId\SmartResponse\SmartResponse;
+
+/**
+ * @author: 
+ * Date: 14:04:28
+ * Time: 2021/11/06
+ * Class PersonalAccessTokenStoreController
+ * @package App\Http\Controllers\PersonalAccessTokens
+ */
+class PersonalAccessTokenStoreController
+{
+/**
+     * @OA\Post(
+     *      path="/api/personal-access-token/store",
+     *      tags={"Personal Access Token"},
+     *      summary="Store Personal Access Token Data",
+     *      description="Store Personal Access Token Data",
+     *      @OA\Parameter(
+     *          name="tokenable_type",
+     *          in="query",
+     *          required=true,
+     *          description="PersonalAccessToken tokenable_type",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="tokenable_id",
+     *          in="query",
+     *          required=true,
+     *          description="PersonalAccessToken tokenable_id",
+     *          @OA\Schema(
+     *              type="int"
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="name",
+     *          in="query",
+     *          required=true,
+     *          description="PersonalAccessToken name",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="token",
+     *          in="query",
+     *          required=true,
+     *          description="PersonalAccessToken token",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="abilities",
+     *          in="query",
+     *          required=false,
+     *          description="PersonalAccessToken abilities",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="last_used_at",
+     *          in="query",
+     *          required=false,
+     *          description="PersonalAccessToken last_used_at",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          @OA\MediaType(
+     *             mediaType="application/json",
+     *          ),
+     *          response=201,
+     *          description="Store Data Success"
+     *      ),
+     *      @OA\Response(
+     *          response=400,
+     *          description="Bad request"
+     *      ),
+     *      @OA\Response(
+     *          response=500,
+     *          description="System error"
+     *      ),
+     *      security={
+     *          {"api_key_security_example": {}}
+     *      }
+     *      )
+     *
+     * Returns Personal Access Token Store status
+     */
+    /**
+     * @param PersonalAccessTokenRequest $personalAccessTokenRequest
+     * @param PersonalAccessTokenServiceRequest $personalAccessTokenServiceRequest
+     * @param PersonalAccessTokenService $personalAccessTokenService
+     * @param SmartResponse $smartResponse
+     * @param Response $response
+     * @return mixed
+     * @throws Exception
+     */
+    public function __invoke(PersonalAccessTokenRequest $personalAccessTokenRequest,
+                             PersonalAccessTokenServiceRequest $personalAccessTokenServiceRequest,
+                             PersonalAccessTokenService $personalAccessTokenService,
+                             PersonalAccessTokenResponse $personalAccessTokenResponse,
+                             SmartResponse $smartResponse,
+                             Response $response)
+    {
+        $personalAccessTokenValidated = $personalAccessTokenRequest->validated();
+
+        $personalAccessTokenServiceRequest = Lazy::copyFromArray($personalAccessTokenValidated, $personalAccessTokenServiceRequest, Lazy::AUTOCAST);
+
+        
+        
+        $result = app()->call([$personalAccessTokenService, 'store'], ['personalAccessTokenServiceRequest' => $personalAccessTokenServiceRequest]);
+
+        if ($result->status) {
+            
+            $response->setData(Lazy::transform($result->personalAccessToken, $personalAccessTokenResponse));
+            return $smartResponse->saveDataSuccess($response);
+        } else {
+            
+            return $smartResponse->saveDataFailed($response);
+        }
+    }
+}
